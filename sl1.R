@@ -21,3 +21,7 @@ tv <- select(Advertising,"TV","sales")
 head(tv)
 view(tv)
 plot(tv)
+
+
+y <- 3
+x <- 2
