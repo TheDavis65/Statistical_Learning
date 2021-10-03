@@ -22,11 +22,12 @@ head(tv)
 view(tv)
 plot(tv)
 
-
-y <- 3
-x <- 2
-
-f <- 12
-g <- 25
-
-s <- 5
+library(readr)
+Credit <- read_csv("Data/Credit.csv")
+View(Credit)
+?Credit # Information vedr. Credit er fejlbehæftet
+summary(Credit) # Her får du mere information om Credit
+lm(Balance ~ Student + Limit, data=Credit) # Lineær regression med forklarende variabler
+plot(lm(Balance ~ Student + Limit, data=Credit))
+plot(Credit)
+Credit
