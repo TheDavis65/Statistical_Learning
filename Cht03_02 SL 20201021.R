@@ -8,12 +8,14 @@ pacman::p_load("tidyverse", "magrittr", "nycflights13", "gapminder",
                "car", "devtools")
 
 # Simple Linear Regression
-
+?Boston
 
 names(Boston)
+
 dim(Boston)
 lm.fit=lm(medv~lstat) # medv = median house value.
 lm.fit=lm(medv~lstat,data=Boston)
+lm.fit
 attach(Boston)
 lm.fit=lm(medv~lstat)
 lm.fit
@@ -27,8 +29,8 @@ confint(lm.fit)
 confint(lm.fit)[1,]
 confint(lm.fit)[2,]
 
-predict(lm.fit,data.frame(lstat=(c(5,10,15))), interval="confidence")
-predict(lm.fit,data.frame(lstat=(c(5,10,15))), interval="prediction")
+predict(lm.fit,data.frame(lstat=(c(5,10,15))), interval="confidence")## smal
+predict(lm.fit,data.frame(lstat=(c(5,10,15))), interval="prediction")## bred
 
 plot(lstat,medv)
 abline()
@@ -123,8 +125,10 @@ lm.fit=lm(Sales~.+Income:Advertising+Price:Age,data=Carseats)
 summary(lm.fit)
 contrasts(Carseats$ShelveLoc)
 
+
 names(Carseats)
 lmfit_qmed <- lm(Sales~.+Income:Advertising+Price:Age,data=Carseats)
+
 lmfit_qikkemed <- lm(Sales~.+Income:Advertising+Price:Age-ShelveLoc,data=Carseats)
 anova(lmfit_qmed, lmfit_qikkemed)
 #
@@ -159,7 +163,7 @@ summary(lm.fit04)
 lm.fit04=lm(sales ~ radio + TV, data = Advertising)
 summary(lm.fit04)
 
-lm.fit05=lm(sales ~ .+radio*TV -X1, data = Advertising)
+lm.fit05=lm(sales ~ .+radio*TV -...1, data = Advertising)
 summary(lm.fit05)
 
 
