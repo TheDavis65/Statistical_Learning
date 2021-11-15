@@ -36,3 +36,8 @@ lm(Balance ~ Student + Limit, data=Credit) # Lineær regression med forklarende 
 plot(lm(Balance ~ Student + Limit, data=Credit))
 plot(Credit)
 Credit
+
+library(readr)
+Advertising <- read_csv("data/Credit.csv")
+View(Credit)
+
