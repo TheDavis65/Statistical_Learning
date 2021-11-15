@@ -23,6 +23,11 @@ view(tv)
 plot(tv)
 
 library(readr)
+  
+  
+  
+  
+  
 Credit <- read_csv("Data/Credit.csv")
 View(Credit)
 ?Credit # Information vedr. Credit er fejlbehæftet
