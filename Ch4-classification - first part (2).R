@@ -16,8 +16,6 @@ names(Smarket)
 dim(Smarket)
 summary(Smarket)
 pairs(Smarket)
-
-view(Smarket)
 ###
 cor(Smarket)
 cor(Smarket[, -9])
@@ -29,7 +27,7 @@ plot(Volume)
 
 attach(Smarket)
 
-### Logistisk regration
+###
 glm.fits <- glm(
   Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume,
   data = Smarket, family = binomial
@@ -44,17 +42,13 @@ glm.probs <- predict(glm.fits, type = "response")
 glm.probs[1:10]
 contrasts(Direction)
 ###
-
-?glm
 length(glm.probs)
 glm.pred <- rep("Down", 1250)
 glm.pred[glm.probs > .5] = "Up"
-glm.pred
 ###
 table(glm.pred, Direction)
 (507 + 145) / 1250
 mean(glm.pred == Direction)
-
 ###
 train <- (Year < 2005)
 Smarket.2005 <- Smarket[!train, ]
@@ -75,13 +69,12 @@ mean(glm.pred == Direction.2005)
 mean(glm.pred != Direction.2005)
 
 # Simple strategy:
-sum(table(glm.pred, Direction.2005)[c(1:4)])/
+sum(table(glm.pred, Direction.2005)[3:4])/
 sum(table(glm.pred, Direction.2005))
 
 ### Smaller model:
 glm.fits <- glm(Direction ~ Lag1 + Lag2, data = Smarket,
                 family = binomial, subset = train)
-summary(glm.fits)
 glm.probs <- predict(glm.fits, Smarket.2005,
                      type = "response")
 glm.pred <- rep("Down", 252)
@@ -101,7 +94,6 @@ predict(glm.fits,
 
 ###
 library(MASS)
-
 lda.fit <- lda(Direction ~ Lag1 + Lag2, data = Smarket,
                subset = train)
 lda.fit
@@ -114,17 +106,13 @@ lda.class <- lda.pred$class
 table(lda.class, Direction.2005)
 mean(lda.class == Direction.2005)
 ###
-sum(lda.pred$posterior[, 2] >= .5)
-sum(lda.pred$posterior[, 2] < .5)
+sum(lda.pred$posterior[, 1] >= .5)
+sum(lda.pred$posterior[, 1] < .5)
 ###
-lda.pred$posterior[1:20, 2]
+lda.pred$posterior[1:20, 1]
 lda.class[1:20]
 ###
 sum(lda.pred$posterior[, 1] > .9)
-sum(lda.pred$posterior[, 1] > .52)
-sum(lda.pred$posterior[, 1] < .46)
-
-sum(lda.pred$posterior[, 2] > .54)
 
 # Quadratic Discriminant Analysis -----------------------------------------
 
@@ -168,21 +156,19 @@ knn.pred <- knn(train.X, test.X, train.Direction, k = 1)
 table(knn.pred, Direction.2005)
 (83 + 43) / 252
 ###
-knn.pred <- knn(train.X, test.X, train.Direction, k = 11)
+knn.pred <- knn(train.X, test.X, train.Direction, k = 3)
 table(knn.pred, Direction.2005)
 mean(knn.pred == Direction.2005)
 
 
 
-# Caravan ------------------------------------------------------
+
 
 ###
 dim(Caravan)
 attach(Caravan)
 summary(Purchase)
 348 / 5822
-?Caravan
-?var
 ###
 standardized.X <- scale(Caravan[, -86])
 var(Caravan[, 1])
@@ -195,7 +181,6 @@ train.X <- standardized.X[-test, ]
 test.X <- standardized.X[test, ]
 train.Y <- Purchase[-test]
 test.Y <- Purchase[test]
-
 set.seed(1)
 knn.pred <- knn(train.X, test.X, train.Y, k = 1)
 mean(test.Y != knn.pred)
